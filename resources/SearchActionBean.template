@@ -1,0 +1,19 @@
+package PACKAGE.action
+
+import net.sf.gripes.action.GripesActionBean
+
+import net.sourceforge.stripes.action.Resolution
+import net.sourceforge.stripes.action.DefaultHandler
+
+import net.sf.gripes.search.util.GripesSearcher
+
+class SearchActionBean extends GripesActionBean {	
+	String query
+	List results
+	
+	@DefaultHandler Resolution performSearch() {
+		results = GripesSearcher.query(query)
+		
+		forward("results")
+	}
+}

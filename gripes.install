@@ -1,0 +1,22 @@
+import net.sf.gripes.GripesUtil
+
+def base = GripesUtil.getSettings(project).src + "/" + GripesUtil.getSettings(project).packageBase.replaceAll(/\./,"/")
+
+
+if(base.startsWith(/\//)) base = base[1..base.length()-1]
+
+File searchBeanTemplate = new File(addonDir.canonicalPath+"/resources/SearchActionBean.template")
+
+File searchBean = new File(base+"/action/SearchActionBean.groovy")
+
+searchBean.createNewFile()
+searchBean.text = searchBeanTemplate.text.replaceAll(/PACKAGE/,GripesUtil.getSettings(project).packageBase)
+
+File searchResultsTemplate = new File(addonDir.canonicalPath+"/resources/jsp/results.jsp")
+
+File searchResultsJsp = new File("web/WEB-INF/jsp/search/results.jsp")
+
+searchResultsJsp.parentFile.mkdirs()
+searchResultsJsp.createNewFile()
+
+searchResultsJsp.text = searchResultsTemplate.text.replaceAll(/PACKAGE/,GripesUtil.getSettings(project).packageBase)
